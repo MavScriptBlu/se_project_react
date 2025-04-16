@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  padding: 32x 0 28px;
+  border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
+  justify-content: center;
+  align-items: center;
+}
+
+.header__logo {
+  margin-right: 20px;
+}
+
+.header__date-and-location {
+  margin: 0;
+}
+
+.header__add-clothes-button {
+  margin: 0 20px 0 auto;
+  border: none;
+  background: transparent;
+}
+
+/* username and avatar container */
+.header__user-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 1360px;
+  padding: 0 20px; /* page seperation cushion */
+}
+
+.header__username {
+  margin: 0;
+}
