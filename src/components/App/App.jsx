@@ -277,6 +277,7 @@ function App() {
         activeModal={activeModal}
         card={selectedCard}
         onClose={closeActiveModal}
+        onOverlayClick={handleOverlayClick}
       />
 
       <Footer />

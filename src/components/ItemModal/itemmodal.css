@@ -1,0 +1,51 @@
+/*itemmodal.css 
+these styles are for the item modal
+to override any styles is gets from modalwithform.css */
+.modal__content_type_image {
+  margin: 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 16px;
+}
+
+.modal__image {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.modal__close_type_image {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  background-image: url(../../assets/closeButtonLight.svg);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal__footer {
+  padding: 20px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.modal__caption {
+  margin: 0;
+}
+
+.modal__weather {
+  margin: 0;
+}

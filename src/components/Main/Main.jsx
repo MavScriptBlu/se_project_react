@@ -25,7 +25,7 @@ function Main({ weatherData, handleCardClick, clothingItems }) {
           {filteredClothingItems.map((item) => {
             return (
               <ItemCard
-                key={item._id || item.id} //both default and new cards
+                key={item._id} //both default and new cards
                 item={item}
                 onCardClick={handleCardClick}
               />
