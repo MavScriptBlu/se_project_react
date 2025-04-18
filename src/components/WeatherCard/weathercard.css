@@ -1,4 +1,5 @@
 .weather-card {
+  padding: 0 20px;
   position: relative; /*allows layering of elements*/
   /*below this line is for the weather-card__image to keep its size in other views*/
   display: flex;
@@ -7,13 +8,15 @@
   overflow: hidden;
 }
 
-.weather-card__temperature {
+.weather-card__temp {
   margin: 0;
+  font-weight: 700;
   font-size: 36px;
-  line-height: 40px;
+  line-height: 1.1;
+  color: #fff;
   position: absolute;
   top: 20px;
-  left: 16px;
+  left: 36px;
 }
 
 /*everything here is needed for image to keep its shape*/
@@ -21,4 +24,5 @@
   object-fit: cover;
   object-position: right top;
   width: 100%; /*this is keeping the sun icon with its background*/
+  border-radius: 12px;
 }

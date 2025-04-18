@@ -2,11 +2,11 @@
 .page {
   background-color: #f3f3f3;
   max-width: 1440px;
+  font-family: "Cabinet Grotesk", sans-serif;
 }
 
 .page_content {
   max-width: 1360px;
   margin: 0 auto;
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
   padding: 0 20px; /* page seperation cushion */
 }

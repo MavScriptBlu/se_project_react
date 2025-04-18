@@ -5,15 +5,15 @@ import "./app.css";
 import { coordinates, APIkey } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
-// import Footer from "../Footer/Footer";
+import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-// import ItemModal from "../ItemModal/ItemModal";
+import ItemModal from "../ItemModal/ItemModal";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 
 function App() {
   // States for managing the application
   const [weatherData, setWeatherData] = useState({
-    type: "cold",
+    type: "",
     temp: { F: 999, C: 999 },
     city: "",
   });
@@ -27,7 +27,7 @@ function App() {
   };
 
   // Function to handle modal opening/closing
-  const handleModalClose = () => {
+  const handleAddClick = () => {
     setActiveModal("add-garment");
   };
 
@@ -48,7 +48,11 @@ function App() {
     <div className="page">
       <div className="page__content">
         <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-        <Main weatherData={weatherData} onButtonClick={setActiveModal} />
+        <Main
+          weatherData={weatherData}
+          onCardClick={setActiveModal}
+          handleCardClick={handleCardClick}
+        />
       </div>
       <ModalWithForm
         title="New Garment"
@@ -60,7 +64,7 @@ function App() {
           <input
             type="text"
             className="modal__input"
-            id="imageUrl"
+            id="name"
             placeholder="Enter garment name"
             required
           />
@@ -77,65 +81,31 @@ function App() {
         <fieldset className="modal__radio-buttons">
           <legend className="modal__legend">Select the weather type:</legend>
           <label htmlFor="hot" className="modal__label modal__label_type_radio">
-            <input id="cold" type="radio" className="modal__radio-input" />
+            <input id="hot" type="radio" className="modal__radio-input" />
+            Hot
           </label>
           <label
             htmlFor="warm"
             className="modal__label modal__label_type_radio">
-            <input id="cold" type="radio" className="modal__radio-input" />
+            <input id="warm" type="radio" className="modal__radio-input" />
+            Warm
           </label>
           <label
             htmlFor="cold"
             className="modal__label modal__label_type_radio">
             <input id="cold" type="radio" className="modal__radio-input" />
+            Cold
           </label>
         </fieldset>
       </ModalWithForm>
+      <ItemModal
+        activeModal={activeModal}
+        card={selectedCard}
+        onClose={closeActiveModal}
+      />
+      <Footer />
     </div>
   );
 }
 
 export default App;
-
-/*
-import { useState, useEffect } from "react";
-import Header from "./Header";
-import Main from "../Main";
-import Footer from "./Footer";
-import ModalWithForm from "../ModalWithForm";
-import ItemModal from "../ItemModal";
-import "./assets/react.svg";
-
-
-function App() {
-  const [temp, setTemp] = useState(0);
-
-
-
-  // Function to handle adding new clothing item
-  const handleAddNewClick = () => {
-    setActiveModal("create");
-  };
-
-  return (
-    <div className="page">
-      <Header onAddNewClick={handleAddNewClick} location={location} />
-      <Main weatherTemp={temp} onCardClick={handleCardClick} />
-      <Footer />
-
-      {activeModal === "create" && (
-        <ModalWithForm
-          title="New Garment"
-          name="new-card"
-          buttonText="Add garment"
-          onClose={handleModalClose}>
-      //    { Form children will go here }
-        </ModalWithForm>
-      )}
-
-      {activeModal === "preview" && (
-        <ItemModal selectedCard={selectedCard} onClose={handleModalClose} />
-      )}
-  </div>
-  );
- */
