@@ -5,12 +5,13 @@ import ItemCard from "../ItemCard/ItemCard";
 import { defaultClothingItems } from "../../utils/constants";
 import { useMemo } from "react";
 
-function Main({ weatherData, handleCardClick }) {
+function Main({ weatherData, handleCardClick, clothingItems }) {
   const filteredClothingItems = useMemo(() => {
-    return defaultClothingItems.filter((item) => {
+    const allItems = [...defaultClothingItems, ...clothingItems];
+    return allItems.filter((item) => {
       return item.weather === weatherData.type;
     });
-  }, [weatherData.type]);
+  }, [weatherData.type, clothingItems]);
 
   return (
     <main>
@@ -24,7 +25,7 @@ function Main({ weatherData, handleCardClick }) {
           {filteredClothingItems.map((item) => {
             return (
               <ItemCard
-                key={item._id}
+                key={item._id || item.id} //both default and new cards
                 item={item}
                 onCardClick={handleCardClick}
               />

@@ -9,7 +9,7 @@ function ItemCard({ item, onCardClick }) {
     <li className="card">
       <h2 className="card__name">{item.name}</h2>
       <img
-        onClick={handleCardClick} /* Fix incorrect prop name */
+        onClick={handleCardClick}
         src={item.link}
         alt={item.name}
         className="card__image"

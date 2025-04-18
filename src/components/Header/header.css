@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  padding: 32px 20px 28px;
+  padding: 12px 20px 28px;
   justify-content: center;
   align-items: center;
 }
@@ -11,6 +11,11 @@
   gap: 24px;
   width: 100%;
   max-width: 1360px;
+}
+
+.header__logo {
+  max-width: 89px;
+  height: 40px;
 }
 
 .header__date-and-location {

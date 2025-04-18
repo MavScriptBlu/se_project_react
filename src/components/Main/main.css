@@ -1,8 +1,26 @@
+/*main.css*/
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.cards__text {
+  margin: 20px 0 14px;
+  font-family: "Cabinet Groteskbold", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  color: #000;
+}
+
 .cards__list {
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  list-style-type: none;
-  gap: 21px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 325px);
+  gap: 20px;
 }

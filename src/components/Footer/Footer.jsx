@@ -1,4 +1,5 @@
 /*Footer.jsx*/
+import "./footer.css";
 
 function Footer() {
   return (

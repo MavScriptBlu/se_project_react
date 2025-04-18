@@ -1,0 +1,20 @@
+.footer {
+  margin-top: auto;
+  padding: 20px;
+  min-height: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: "Cabinet Groteskmedium", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.footer__copyright {
+  margin: 0;
+}
+
+.footer__copyright-year {
+  margin: 0;
+}

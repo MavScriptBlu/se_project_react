@@ -16,15 +16,22 @@
 }
 
 .modal__title {
-  margin: 0;
+  margin: 0 0 24px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .modal__close {
   position: absolute;
   top: 20px;
   right: 20px;
-  /* background-color: transparent; */
-  /* border: none; */
+  width: 20px;
+  height: 20px;
+  background-image: url(../../assets/closeButtonDark.svg);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
 }
 
@@ -35,22 +42,153 @@
   max-width: 496px;
   box-sizing: border-box;
   width: 100%;
+  border-radius: 20px;
 }
 
-.modal__form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-.modal__input {
-  display: block;
-}
-
-.modal__radio-buttons {
-  border: none;
+/* ---------- for the item card modal ------ */
+.modal__content_type_image {
   padding: 0;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+  border-radius: 16px;
+}
+
+.modal__image {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  object-fit: cover;
+  overflow: hidden;
+}
+/* ---------------------------- */
+
+/* these modal fonts are all the same so fonts styles are put here */
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.modal__input {
+  padding: 8px 0 4px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.3);
+  outline: none; /* removes the focus outline */
+  background: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #000;
+}
+
+/* Normal hover state (when valid) */
+.modal__input:hover:not(:invalid:not(:placeholder-shown)) {
+  border-bottom: 1px solid #000;
+}
+
+/* Red hover state (when invalid and user has typed something) */
+.modal__input:hover:invalid:not(:placeholder-shown) {
+  border-bottom: 1px solid #ff4d00;
+}
+
+/* --------- Styles for invalid input ----------- */
+.modal__input:invalid {
+  color: #ff4d00;
+}
+
+.modal__input:invalid:not(:placeholder-shown) {
+  color: #ff4d00;
+}
+.modal__input:invalid:not(:placeholder-shown) + .modal__error {
+  color: #ff4d00;
+  display: block;
+}
+
+.modal__label:has(.modal__input:invalid:not(:placeholder-shown)) {
+  color: #ff4d00;
+}
+
+.modal__input:invalid:not(:placeholder-shown)::placeholder {
+  color: #ff4d00;
+}
+/* -------------------------------- */
+
+.modal__legend {
+  margin-bottom: 12px;
+}
+
+/* container of the buttons and labels of buttons */
+.modal__radio-buttons {
+  margin: 0;
+  margin-bottom: 8px;
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Adds some spacing between radio buttons */
+}
+
+.modal__label_type_radio {
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  width: fit-content; /*clickable area for checkboxes smaller*/
+  transition: color 0.3s;
+}
+
+/* When label is hovered or radio is checked, make label black */
+.modal__label_type_radio:hover,
+.modal__label_type_radio:has(.modal__radio-input:checked) {
+  color: #000;
+}
+
+/* Style for the radio input itself */
+.modal__radio-input {
+  accent-color: #787878; /* grey when unchecked */
+  margin: 0 8px 0 0;
+  cursor: pointer;
+  transition: accent-color 0.3s; /* smooth transition for color change */
+}
+
+/* When radio is hovered or checked, makes it black */
+.modal__label_type_radio:hover .modal__radio-input,
+.modal__radio-input:checked {
+  accent-color: #000;
+}
+
+.modal__error {
+  display: block;
+  line-height: 1.1;
+  color: rgba(255, 0, 0, 0.7);
+}
+
+/* -------------- Submit button --------------- */
+.modal__submit {
+  width: 124px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.5s;
+  cursor: pointer;
+}
+
+.modal__submit:hover {
+  background-color: rgba(33, 33, 33, 0.6);
+}
+
+.modal__submit:disabled {
+  background-color: rgba(33, 33, 33, 0.3);
+  cursor: not-allowed;
 }

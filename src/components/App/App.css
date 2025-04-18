@@ -1,12 +1,17 @@
 /* App.css */
 .page {
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   background-color: #f3f3f3;
   max-width: 1440px;
-  font-family: "Cabinet Grotesk", sans-serif;
+  font-family: "Cabinet Groteskbold", sans-serif;
+  min-height: 100vh;
 }
 
 .page_content {
-  max-width: 1360px;
   margin: 0 auto;
   padding: 0 20px; /* page seperation cushion */
+  max-width: 1360px;
 }
