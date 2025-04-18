@@ -1,7 +1,7 @@
 // App.jsx
 import { useEffect, useState } from "react";
 
-import "./app.css";
+import "./App.css";
 import { coordinates, APIkey } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
