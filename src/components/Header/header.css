@@ -22,7 +22,7 @@
   margin: 0;
   font-weight: 700;
   font-size: 20px;
-  line-height: 1.2;
+  line-height: 24px;
 }
 
 .header__add-clothes-button {
@@ -30,7 +30,7 @@
   padding: 0;
   font-weight: 700;
   font-size: 20px;
-  line-height: 1.2;
+  line-height: 24px;
   white-space: nowrap;
   border: none;
   background: transparent;
