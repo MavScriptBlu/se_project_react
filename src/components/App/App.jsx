@@ -9,6 +9,7 @@ import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
 function App() {
   // States for managing the application
@@ -20,17 +21,9 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
-  const [formValues, setFormValues] = useState({
-    name: "",
-    imageUrl: "",
-    weather: "",
-  });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [touchedFields, setTouchedFields] = useState({
-    name: false,
-    imageUrl: false,
-    weather: false,
-  });
+  const { values, handleChange, errors, isValid, resetForm, setValues } =
+    useFormAndValidation();
 
   // Function to handle clicking on a card
   const handleCardClick = (card) => {
@@ -41,21 +34,17 @@ function App() {
   // Function to handle add modal opening/
   const handleAddClick = () => {
     setActiveModal("add-garment");
+    setValues({
+      name: "",
+      imageUrl: "",
+      weather: "",
+    });
   };
 
   // Function to handle closing the active modal
   const closeActiveModal = () => {
     setActiveModal("");
-    setFormValues({
-      name: "",
-      imageUrl: "",
-      weather: "",
-    });
-    setTouchedFields({
-      name: false,
-      imageUrl: false,
-      weather: false,
-    });
+    resetForm(); // This will reset all form values
   };
 
   //Function to close modal on the overlay
@@ -65,28 +54,9 @@ function App() {
     }
   };
 
-  // Function to check input value
-  const handleInputChange = (event) => {
-    const { id, name, value } = event.target;
-    setFormValues({
-      ...formValues,
-      [name || id]: value,
-    });
-    setTouchedFields({
-      ...touchedFields,
-      [name || id]: true,
-    });
-  };
-
   // Function for form input value validation
   const isFormValid = () => {
-    return (
-      formValues.name &&
-      formValues.imageUrl &&
-      formValues.weather &&
-      !getErrorMessage("name", formValues.name) &&
-      !getErrorMessage("imageUrl", formValues.imageUrl)
-    );
+    return isValid && values.name && values.imageUrl && values.weather;
   };
 
   // Function for submission validation
@@ -94,59 +64,29 @@ function App() {
     e.preventDefault();
     setIsSubmitted(true);
     const newGarment = {
-      _id: Date.now(), //this creates a unique ID based on timestamp
-      ...formValues,
-      weather: formValues.weather.toLowerCase(),
-      link: formValues.imageUrl,
+      _id: Date.now(),
+      ...values,
+      weather: values.weather.toLowerCase(),
+      link: values.imageUrl,
     };
-    setClothingItems([...clothingItems, newGarment]); //adds new garment to the collection
-    setFormValues({
-      name: "",
-      imageUrl: "",
-      weather: "",
-    });
-    setIsSubmitted(false); // resets submission state
-    closeActiveModal(); // closes after successful submission
-  };
-
-  // Function to get error message
-  const getErrorMessage = (name, value) => {
-    if (!value && touchedFields[name]) {
-      return "This field is required";
-    }
-    if (name === "name" && value.length < 2 && touchedFields[name]) {
-      return "Name must be at least 2 characters long";
-    }
-    if (name === "imageUrl" && touchedFields[name] && value) {
-      try {
-        const url = new URL(value);
-        // Check if URL contains image-related patterns
-        if (
-          !url.pathname.includes("photo") &&
-          !/\.(jpg|jpeg|png|gif|bmp)/i.test(url.pathname)
-        ) {
-          return "URL must link directly to an image file";
-        }
-      } catch (e) {
-        return "Please enter a valid URL";
-      }
-    }
-    return "";
+    setClothingItems([...clothingItems, newGarment]);
+    resetForm();
+    setIsSubmitted(false);
+    closeActiveModal();
   };
 
   // checking input values
   useEffect(() => {
+    if (!activeModal) return; // Only add listener when needed
+
     const handleEscClose = (e) => {
       if (e.key === "Escape") {
         closeActiveModal();
       }
     };
     document.addEventListener("keydown", handleEscClose);
-    // Cleanup the event listener when component unmounts
-    return () => {
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  }, []);
+    return () => document.removeEventListener("keydown", handleEscClose);
+  }, [activeModal]);
 
   useEffect(() => {
     getWeather(coordinates, APIkey)
@@ -178,6 +118,7 @@ function App() {
         title="New Garment"
         buttonText="Add garment"
         activeModal={activeModal}
+        isOpen={activeModal === "add-garment"}
         onClose={closeActiveModal}
         onOverlayClick={handleOverlayClick}
         isValid={isFormValid()}
@@ -188,21 +129,17 @@ function App() {
           <input
             type="text"
             className={`modal__input ${
-              touchedFields.name && getErrorMessage("name", formValues.name)
-                ? "modal__input_type_error"
-                : ""
+              errors.name ? "modal__input_type_error" : ""
             }`}
-            id="name"
+            name="name" // Make sure to use name instead of id
             placeholder="Enter garment name"
-            value={formValues.name}
-            onChange={handleInputChange}
+            value={values.name || ""}
+            onChange={handleChange}
             minLength={2}
             maxLength={40}
             required
           />
-          <span className="modal__error">
-            {getErrorMessage("name", formValues.name)}
-          </span>
+          <span className="modal__error">{errors.name}</span>
         </label>
 
         <label htmlFor="imageUrl" className="modal__label">
@@ -210,33 +147,27 @@ function App() {
           <input
             type="url"
             className={`modal__input ${
-              touchedFields.imageUrl &&
-              getErrorMessage("imageUrl", formValues.imageUrl)
-                ? "modal__input_type_error"
-                : ""
+              errors.imageUrl ? "modal__input_type_error" : ""
             }`}
-            id="imageUrl"
+            name="imageUrl"
             placeholder="Image URL"
-            value={formValues.imageUrl}
-            onChange={handleInputChange}
+            value={values.imageUrl || ""}
+            onChange={handleChange}
             required
           />
-          <span className="modal__error">
-            {getErrorMessage("imageUrl", formValues.imageUrl)}
-          </span>
+          <span className="modal__error">{errors.imageUrl}</span>
         </label>
 
         <fieldset className="modal__radio-buttons">
           <legend className="modal__legend">Select the weather type:</legend>
           <label htmlFor="hot" className="modal__label modal__label_type_radio">
             <input
-              id="hot"
               type="radio"
               className="modal__radio-input"
               name="weather"
               value="hot"
-              checked={formValues.weather === "hot"}
-              onChange={handleInputChange}
+              checked={values.weather === "hot"}
+              onChange={handleChange}
             />
             Hot
           </label>
@@ -245,13 +176,12 @@ function App() {
             htmlFor="warm"
             className="modal__label modal__label_type_radio">
             <input
-              id="warm"
               type="radio"
               className="modal__radio-input"
               name="weather"
               value="warm"
-              checked={formValues.weather === "warm"}
-              onChange={handleInputChange}
+              checked={values.weather === "warm"}
+              onChange={handleChange}
             />
             Warm
           </label>
@@ -260,13 +190,12 @@ function App() {
             htmlFor="cold"
             className="modal__label modal__label_type_radio">
             <input
-              id="cold"
               type="radio"
               className="modal__radio-input"
               name="weather"
               value="cold"
-              checked={formValues.weather === "cold"}
-              onChange={handleInputChange}
+              checked={values.weather === "cold"}
+              onChange={handleChange}
             />
             Cold
           </label>
