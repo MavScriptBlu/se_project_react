@@ -124,14 +124,14 @@ function App() {
         isValid={isFormValid()}
         onSubmit={handleSubmit}
         isSubmitted={isSubmitted}>
-        <label htmlFor="name" className="modal__label">
+        <label className="modal__label">
           Name
           <input
             type="text"
             className={`modal__input ${
               errors.name ? "modal__input_type_error" : ""
             }`}
-            name="name" // Make sure to use name instead of id
+            name="name"
             placeholder="Enter garment name"
             value={values.name || ""}
             onChange={handleChange}
@@ -142,7 +142,7 @@ function App() {
           <span className="modal__error">{errors.name}</span>
         </label>
 
-        <label htmlFor="imageUrl" className="modal__label">
+        <label className="modal__label">
           Image
           <input
             type="url"
@@ -160,7 +160,7 @@ function App() {
 
         <fieldset className="modal__radio-buttons">
           <legend className="modal__legend">Select the weather type:</legend>
-          <label htmlFor="hot" className="modal__label modal__label_type_radio">
+          <label className="modal__label modal__label_type_radio">
             <input
               type="radio"
               className="modal__radio-input"
@@ -172,9 +172,7 @@ function App() {
             Hot
           </label>
 
-          <label
-            htmlFor="warm"
-            className="modal__label modal__label_type_radio">
+          <label className="modal__label modal__label_type_radio">
             <input
               type="radio"
               className="modal__radio-input"
@@ -186,9 +184,7 @@ function App() {
             Warm
           </label>
 
-          <label
-            htmlFor="cold"
-            className="modal__label modal__label_type_radio">
+          <label className="modal__label modal__label_type_radio">
             <input
               type="radio"
               className="modal__radio-input"
