@@ -1,77 +1,78 @@
-# **WTWR - React Front-End Application**
+# WTWR - What to Wear Right Now
 
-This repository contains the **React front-end** for the "What to Wear Right Now" (WTWR) project, a weather-based clothing recommendation application.
+This repository contains the React front-end for the **WTWR** project—a weather-based clothing recommendation application designed to help users choose the perfect outfit for any weather condition.
 
-## **📌 Features**
+---
 
-- **React + Vite Setup:** Optimized with **Vite** for fast development and hot module replacement (HMR).
-- **State Management:** Efficiently handles user interactions and clothing recommendations.
-- **Responsive Design:** Styled with CSS to ensure adaptability across various devices.
+## 🚀 **Features**
+### **Optimized React + Vite Setup**
+- Built using **Vite** for fast development and seamless hot module replacement (HMR).
 
-## **🛠️ Technologies Used**
+### **State Management**
+- Efficient handling of user interactions and clothing recommendations ensures smooth functionality.
 
-- **React** (Frontend framework)
-- **Vite** (Development environment)
-- **ESLint & Prettier** (Code formatting & linting)
-- **CSS** (Styling)
-- **JavaScript** (Core functionality)
+### **Responsive Design**
+- Styled with CSS to adapt beautifully across mobile, tablet, and desktop devices.
 
-## **📂 Project Structure**
+---
 
+## 🛠️ **Technologies Used**
+- **React**: Frontend framework for dynamic and scalable user interfaces.
+- **Vite**: High-speed development environment for optimized builds.
+- **ESLint & Prettier**: Enforces consistent code formatting and linting for clean, readable code.
+- **CSS**: Provides responsive and visually appealing styling.
+- **JavaScript**: Powers core functionality and interactivity.
+
+---
+
+## 📂 **Project Structure**
 ```
 /se_project_react
-├── public/               # Static assets (index.html, favicon)
-├── src/                  # Source files
-│   ├── components/       # Reusable components
-│   ├── pages/            # Page-specific files
-│   ├── styles/           # CSS stylesheets
-│   ├── App.jsx           # Main app component
-├── .eslintrc.cjs         # ESLint configuration
-├── .prettierignore       # Prettier ignore file
-├── package.json          # Dependencies and scripts
-├── vite.config.js        # Vite configuration
-└── README.md             # Documentation
+├── public/           # Static assets (index.html, favicon)
+├── src/              # Source files
+│   ├── components/   # Reusable React components
+│   ├── pages/        # Page-specific React files
+│   ├── styles/       # CSS stylesheets
+│   ├── App.jsx       # Main app component
+├── .eslintrc.cjs     # ESLint configuration
+├── .prettierignore   # Prettier ignore file
+├── package.json      # Dependencies and scripts
+├── vite.config.js    # Vite configuration
+└── README.md         # Documentation
 ```
 
-## **🚀 Getting Started**
+---
+
+## 🌐 **Getting Started**
 
 Follow these steps to set up and run the project locally:
 
-1️⃣ **Clone the repository**
-
+1️⃣ Clone the repository:
 ```bash
 git clone https://github.com/iiBamBlue/se_project_react.git
 ```
 
-2️⃣ **Install dependencies**
-
+2️⃣ Install dependencies:
 ```bash
 npm install
 ```
 
-3️⃣ **Run the development server**
-
+3️⃣ Start the development server:
 ```bash
 npm run dev
 ```
 
-4️⃣ Open **http://localhost:3000** in your browser.
+4️⃣ Open the application in your browser:
+[http://localhost:3000](http://localhost:3000)
 
-## **🎯 Future Enhancements**
+---
 
-- Improve UI/UX based on user feedback.
-- Implement advanced state management for better performance.
-- Enhance weather data integration for smarter recommendations.
+## 🎯 **Future Enhancements**
+- **UI/UX Improvements**: Enhance design and user experience based on feedback.
+- **Advanced State Management**: Introduce optimized solutions for complex interactions.
+- **Weather Data Integration**: Improve the accuracy and intelligence of clothing recommendations.
 
-## **📝 License**
+---
 
-This project is licensed under [MIT License](LICENSE).
-
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules..
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📜 **License**
+This project is licensed under the [MIT License](LICENSE).
