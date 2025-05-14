@@ -3,11 +3,17 @@
   padding: 0;
   min-width: 56px;
   height: 28px;
-  border: 2px solid #000;
+  border: 2px solid #7e7e7e;
   border-radius: 20px;
+  color: #7e7e7e;
   cursor: pointer;
   overflow: hidden;
   position: relative;
+}
+
+.toggle-switch:hover {
+  border-color: #000;
+  color: #000;
 }
 
 .toggle-switch__checkbox {
@@ -38,11 +44,13 @@
 }
 
 .toggle-switch__text_F {
-  color: #fff;
   left: 9px;
 }
 
 .toggle-switch__text_C {
-  color: #000;
   right: 9px;
+}
+
+.toggle-switch__text_color_white {
+  color: #fff;
 }

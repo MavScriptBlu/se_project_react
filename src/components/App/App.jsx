@@ -10,6 +10,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
 
 function App() {
   // States for managing the application
@@ -17,6 +18,7 @@ function App() {
     type: "",
     temp: { F: 999, C: 999 },
     city: "",
+    condition: "",
   });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
@@ -24,7 +26,12 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { values, handleChange, errors, isValid, resetForm, setValues } =
     useFormAndValidation();
-  const [currentTemeratureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
+  // Function to handle temperature unit toggle
+  const handleToggleSwitchChange = () => {
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
+  };
 
   // Function to handle clicking on a card
   const handleCardClick = (card) => {
@@ -99,115 +106,118 @@ function App() {
   }, []);
 
   return (
-    <div className="page">
-      <div className="page__content">
-        <Header
-          userName="Darien Johnas"
-          handleAddClick={handleAddClick}
-          weatherData={weatherData}
+    <CurrentTemperatureUnitContext.Provider
+      value={{ currentTemperatureUnit, handleToggleSwitchChange }}>
+      <div className="page">
+        <div className="page__content">
+          <Header
+            userName="Darien Johnas"
+            handleAddClick={handleAddClick}
+            weatherData={weatherData}
+          />
+
+          <Main
+            weatherData={weatherData}
+            onCardClick={setActiveModal}
+            handleCardClick={handleCardClick}
+            clothingItems={clothingItems}
+          />
+        </div>
+
+        <ModalWithForm
+          title="New Garment"
+          buttonText="Add garment"
+          activeModal={activeModal}
+          isOpen={activeModal === "add-garment"}
+          onClose={closeActiveModal}
+          onOverlayClick={handleOverlayClick}
+          isValid={isFormValid()}
+          onSubmit={handleSubmit}
+          isSubmitted={isSubmitted}>
+          <label className="modal__label">
+            Name
+            <input
+              type="text"
+              className={`modal__input ${
+                errors.name ? "modal__input_type_error" : ""
+              }`}
+              name="name"
+              placeholder="Enter garment name"
+              value={values.name || ""}
+              onChange={handleChange}
+              minLength={2}
+              maxLength={40}
+              required
+            />
+            <span className="modal__error">{errors.name}</span>
+          </label>
+
+          <label className="modal__label">
+            Image
+            <input
+              type="url"
+              className={`modal__input ${
+                errors.imageUrl ? "modal__input_type_error" : ""
+              }`}
+              name="imageUrl"
+              placeholder="Image URL"
+              value={values.imageUrl || ""}
+              onChange={handleChange}
+              required
+            />
+            <span className="modal__error">{errors.imageUrl}</span>
+          </label>
+
+          <fieldset className="modal__radio-buttons">
+            <legend className="modal__legend">Select the weather type:</legend>
+            <label className="modal__label modal__label_type_radio">
+              <input
+                type="radio"
+                className="modal__radio-input"
+                name="weather"
+                value="hot"
+                checked={values.weather === "hot"}
+                onChange={handleChange}
+              />
+              Hot
+            </label>
+
+            <label className="modal__label modal__label_type_radio">
+              <input
+                type="radio"
+                className="modal__radio-input"
+                name="weather"
+                value="warm"
+                checked={values.weather === "warm"}
+                onChange={handleChange}
+              />
+              Warm
+            </label>
+
+            <label className="modal__label modal__label_type_radio">
+              <input
+                type="radio"
+                className="modal__radio-input"
+                name="weather"
+                value="cold"
+                checked={values.weather === "cold"}
+                onChange={handleChange}
+              />
+              Cold
+            </label>
+          </fieldset>
+        </ModalWithForm>
+
+        <ItemModal
+          activeModal={activeModal}
+          card={selectedCard}
+          onClose={closeActiveModal}
+          onOverlayClick={handleOverlayClick}
         />
 
-        <Main
-          weatherData={weatherData}
-          onCardClick={setActiveModal}
-          handleCardClick={handleCardClick}
-          clothingItems={clothingItems}
-        />
+        <Footer />
       </div>
-
-      <ModalWithForm
-        title="New Garment"
-        buttonText="Add garment"
-        activeModal={activeModal}
-        isOpen={activeModal === "add-garment"}
-        onClose={closeActiveModal}
-        onOverlayClick={handleOverlayClick}
-        isValid={isFormValid()}
-        onSubmit={handleSubmit}
-        isSubmitted={isSubmitted}>
-        <label className="modal__label">
-          Name
-          <input
-            type="text"
-            className={`modal__input ${
-              errors.name ? "modal__input_type_error" : ""
-            }`}
-            name="name"
-            placeholder="Enter garment name"
-            value={values.name || ""}
-            onChange={handleChange}
-            minLength={2}
-            maxLength={40}
-            required
-          />
-          <span className="modal__error">{errors.name}</span>
-        </label>
-
-        <label className="modal__label">
-          Image
-          <input
-            type="url"
-            className={`modal__input ${
-              errors.imageUrl ? "modal__input_type_error" : ""
-            }`}
-            name="imageUrl"
-            placeholder="Image URL"
-            value={values.imageUrl || ""}
-            onChange={handleChange}
-            required
-          />
-          <span className="modal__error">{errors.imageUrl}</span>
-        </label>
-
-        <fieldset className="modal__radio-buttons">
-          <legend className="modal__legend">Select the weather type:</legend>
-          <label className="modal__label modal__label_type_radio">
-            <input
-              type="radio"
-              className="modal__radio-input"
-              name="weather"
-              value="hot"
-              checked={values.weather === "hot"}
-              onChange={handleChange}
-            />
-            Hot
-          </label>
-
-          <label className="modal__label modal__label_type_radio">
-            <input
-              type="radio"
-              className="modal__radio-input"
-              name="weather"
-              value="warm"
-              checked={values.weather === "warm"}
-              onChange={handleChange}
-            />
-            Warm
-          </label>
-
-          <label className="modal__label modal__label_type_radio">
-            <input
-              type="radio"
-              className="modal__radio-input"
-              name="weather"
-              value="cold"
-              checked={values.weather === "cold"}
-              onChange={handleChange}
-            />
-            Cold
-          </label>
-        </fieldset>
-      </ModalWithForm>
-
-      <ItemModal
-        activeModal={activeModal}
-        card={selectedCard}
-        onClose={closeActiveModal}
-        onOverlayClick={handleOverlayClick}
-      />
-
-      <Footer />
-    </div>
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 
