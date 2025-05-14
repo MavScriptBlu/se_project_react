@@ -24,6 +24,7 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { values, handleChange, errors, isValid, resetForm, setValues } =
     useFormAndValidation();
+  const [currentTemeratureUnit, setCurrentTemperatureUnit] = useState("F");
 
   // Function to handle clicking on a card
   const handleCardClick = (card) => {
