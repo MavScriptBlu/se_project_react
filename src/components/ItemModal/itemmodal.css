@@ -1,13 +1,15 @@
 /*itemmodal.css 
 these styles are for the item modal
-to override any styles is gets from modalwithform.css */
+to override any styles is gets from modalwithform.css if override is not
+accepted use of !important was implemented as of 5/15/25 beforehand this
+was not needed */
 .modal__content_type_image {
   margin: 20px;
-  padding: 0;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-radius: 16px;
+  /* background-color: #fff;  now is recieving from modalwithform.css */
+  border-radius: 16px !important;
 }
 
 .modal__image {
@@ -35,6 +37,10 @@ to override any styles is gets from modalwithform.css */
 .modal__footer {
   padding: 20px 32px 32px;
   display: flex;
+}
+
+.modal__footer-description {
+  display: flex;
   flex-direction: column;
   gap: 12px;
   font-weight: 700;
@@ -48,4 +54,19 @@ to override any styles is gets from modalwithform.css */
 
 .modal__weather {
   margin: 0;
+}
+
+.modal__delete {
+  margin-left: auto; /* Pushes button to the right */
+  padding: 0;
+  display: flex;
+  height: 25px;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: #ff4d00;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
 }

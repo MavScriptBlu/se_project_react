@@ -2,7 +2,7 @@ import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard";
 import { defaultClothingItems } from "../../utils/constants";
 
-export default function ClothesSection() {
+export default function ClothesSection({ onCardClick }) {
   return (
     <div className="clothes-section">
       <div className="clothes-section__header">
@@ -17,7 +17,7 @@ export default function ClothesSection() {
             <ItemCard
               key={item._id} //both default and new cards
               item={item}
-              //PASS AS PROP TO COMPONENT ClothesSection onCardClick={handleCardClick}
+              onCardClick={onCardClick}
             />
           );
         })}

@@ -20,8 +20,11 @@ function ItemModal({ activeModal, onClose, card, onOverlayClick }) {
         />
         <img src={card.link} alt={card.name} className="modal__image" />
         <div className="modal__footer">
-          <p className="modal__caption">{card.name}</p>
-          <p className="modal__weather">Weather: {card.weather}</p>
+          <section className="modal__footer-description">
+            <p className="modal__caption">{card.name}</p>
+            <p className="modal__weather">Weather: {card.weather}</p>
+          </section>{" "}
+          <button className="modal__delete">Delete Item</button>
         </div>
       </div>
     </div>
