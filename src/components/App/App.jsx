@@ -1,16 +1,19 @@
 // App.jsx
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import "./App.css";
-import { coordinates, APIkey } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
+import AddItemModal from "../AddItemModal/AddItemModal";
+import Profile from "../Profile/Profile";
+
+import { coordinates, APIkey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
-import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
 
 function App() {
   // States for managing the application
@@ -115,98 +118,34 @@ function App() {
             handleAddClick={handleAddClick}
             weatherData={weatherData}
           />
-
-          <Main
-            weatherData={weatherData}
-            onCardClick={setActiveModal}
-            handleCardClick={handleCardClick}
-            clothingItems={clothingItems}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  onCardClick={setActiveModal}
+                  handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                />
+              }
+            />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
         </div>
 
-        <ModalWithForm
-          title="New Garment"
-          buttonText="Add garment"
+        <AddItemModal
           activeModal={activeModal}
           isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
           onOverlayClick={handleOverlayClick}
-          isValid={isFormValid()}
+          isSubmitted={isSubmitted}
           onSubmit={handleSubmit}
-          isSubmitted={isSubmitted}>
-          <label className="modal__label">
-            Name
-            <input
-              type="text"
-              className={`modal__input ${
-                errors.name ? "modal__input_type_error" : ""
-              }`}
-              name="name"
-              placeholder="Enter garment name"
-              value={values.name || ""}
-              onChange={handleChange}
-              minLength={2}
-              maxLength={40}
-              required
-            />
-            <span className="modal__error">{errors.name}</span>
-          </label>
-
-          <label className="modal__label">
-            Image
-            <input
-              type="url"
-              className={`modal__input ${
-                errors.imageUrl ? "modal__input_type_error" : ""
-              }`}
-              name="imageUrl"
-              placeholder="Image URL"
-              value={values.imageUrl || ""}
-              onChange={handleChange}
-              required
-            />
-            <span className="modal__error">{errors.imageUrl}</span>
-          </label>
-
-          <fieldset className="modal__radio-buttons">
-            <legend className="modal__legend">Select the weather type:</legend>
-            <label className="modal__label modal__label_type_radio">
-              <input
-                type="radio"
-                className="modal__radio-input"
-                name="weather"
-                value="hot"
-                checked={values.weather === "hot"}
-                onChange={handleChange}
-              />
-              Hot
-            </label>
-
-            <label className="modal__label modal__label_type_radio">
-              <input
-                type="radio"
-                className="modal__radio-input"
-                name="weather"
-                value="warm"
-                checked={values.weather === "warm"}
-                onChange={handleChange}
-              />
-              Warm
-            </label>
-
-            <label className="modal__label modal__label_type_radio">
-              <input
-                type="radio"
-                className="modal__radio-input"
-                name="weather"
-                value="cold"
-                checked={values.weather === "cold"}
-                onChange={handleChange}
-              />
-              Cold
-            </label>
-          </fieldset>
-        </ModalWithForm>
+          values={values}
+          errors={errors}
+          handleChange={handleChange}
+          isFormValid={isFormValid()}
+        />
 
         <ItemModal
           activeModal={activeModal}
