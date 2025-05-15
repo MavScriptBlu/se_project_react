@@ -1,4 +1,4 @@
-/*ItemWithCard.jsx*/
+/*ItemCard.jsx*/
 import "./itemcard.css";
 
 function ItemCard({ item, onCardClick }) {

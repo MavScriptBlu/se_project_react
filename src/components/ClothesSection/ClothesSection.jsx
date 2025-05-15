@@ -1,8 +1,21 @@
 import "./ClothesSection.css";
-import ItemCard from "../ItemCard/ItemCard";
+import ItemCard from "../ItemCard/ItemCard.jsx";
 import { defaultClothingItems } from "../../utils/constants";
+import { useMemo } from "react";
 
-export default function ClothesSection({ onCardClick }) {
+export default function ClothesSection({
+  onCardClick,
+  clothingItems,
+  weatherData,
+}) {
+  // Add the same filtering logic as in Main.jsx
+  const filteredClothingItems = useMemo(() => {
+    const allItems = [...defaultClothingItems, ...clothingItems];
+    return allItems.filter((item) => {
+      return item.weather === weatherData.type;
+    });
+  }, [weatherData.type, clothingItems]);
+
   return (
     <div className="clothes-section">
       <div className="clothes-section__header">
@@ -12,13 +25,9 @@ export default function ClothesSection({ onCardClick }) {
         </button>
       </div>
       <ul className="clothes-section__list">
-        {defaultClothingItems.map((item) => {
+        {filteredClothingItems.map((item) => {
           return (
-            <ItemCard
-              key={item._id} //both default and new cards
-              item={item}
-              onCardClick={onCardClick}
-            />
+            <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
           );
         })}
       </ul>

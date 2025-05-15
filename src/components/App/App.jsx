@@ -14,6 +14,7 @@ import Profile from "../Profile/Profile";
 import { coordinates, APIkey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+import { getClothingItems, addClothingItem } from "../../utils/api";
 
 function App() {
   // States for managing the application
@@ -30,6 +31,8 @@ function App() {
   const { values, handleChange, errors, isValid, resetForm, setValues } =
     useFormAndValidation();
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isWeatherLoading, setIsWeatherLoading] = useState(true);
+  const [isClothingLoading, setIsClothingLoading] = useState(true);
 
   // Function to handle temperature unit toggle
   const handleToggleSwitchChange = () => {
@@ -71,25 +74,30 @@ function App() {
   };
 
   // Function for submission validation
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitted(true);
+
     const newGarment = {
-      _id: Date.now(),
       ...values,
       weather: values.weather.toLowerCase(),
       link: values.imageUrl,
     };
-    setClothingItems([...clothingItems, newGarment]);
-    resetForm();
-    setIsSubmitted(false);
-    closeActiveModal();
+
+    try {
+      const savedItem = await addClothingItem(newGarment);
+      setClothingItems([savedItem, ...clothingItems]); // Add new items to the beginning
+      resetForm();
+      setIsSubmitted(false);
+      closeActiveModal();
+    } catch (error) {
+      console.error("Error adding clothing item:", error);
+      setIsSubmitted(false);
+    }
   };
 
-  // checking input values
   useEffect(() => {
     if (!activeModal) return; // Only add listener when needed
-
     const handleEscClose = (e) => {
       if (e.key === "Escape") {
         closeActiveModal();
@@ -99,13 +107,33 @@ function App() {
     return () => document.removeEventListener("keydown", handleEscClose);
   }, [activeModal]);
 
+  // Fetch weather data from the API
   useEffect(() => {
+    setIsWeatherLoading(true);
     getWeather(coordinates, APIkey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsWeatherLoading(false);
+      });
+  }, []);
+
+  // Fetching clothing items from the API
+  useEffect(() => {
+    setIsClothingLoading(true);
+    getClothingItems()
+      .then((items) => {
+        setClothingItems(items);
+      })
+      .catch((error) => {
+        console.error("Error fetching clothing items:", error);
+      })
+      .finally(() => {
+        setIsClothingLoading(false);
+      });
   }, []);
 
   return (
@@ -127,12 +155,20 @@ function App() {
                   onCardClick={setActiveModal}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  isWeatherLoading={isWeatherLoading}
+                  isClothingLoading={isClothingLoading}
                 />
               }
             />
             <Route
               path="/profile"
-              element={<Profile handleCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  handleCardClick={handleCardClick}
+                  weatherData={weatherData}
+                />
+              }
             />
           </Routes>
         </div>
