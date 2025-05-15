@@ -24,3 +24,15 @@ const processServerResponse = (res) => {
   }
   return Promise.reject(`Error: ${res.status}`); // Added backticks here
 };
+
+// Delete a clothing item endpoint
+export const deleteClothingItem = (id) => {
+  return fetch(`${baseUrl}/items/${id}`, {
+    method: "DELETE",
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  });
+};

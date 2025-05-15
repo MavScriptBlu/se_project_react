@@ -14,7 +14,7 @@ import Profile from "../Profile/Profile";
 import { coordinates, APIkey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
-import { getClothingItems, addClothingItem } from "../../utils/api";
+// import { getClothingItems, addClothingItem } from "../../utils/api";
 
 function App() {
   // States for managing the application
@@ -55,6 +55,15 @@ function App() {
     });
   };
 
+  // Function to handle card deletion
+  const handleDeleteCard = (card) => {
+    const updatedClothingItems = clothingItems.filter(
+      (item) => item._id !== card._id
+    );
+    setClothingItems(updatedClothingItems);
+    closeActiveModal(); // Close the modal after deletion
+  };
+
   // Function to handle closing the active modal
   const closeActiveModal = () => {
     setActiveModal("");
@@ -74,7 +83,7 @@ function App() {
   };
 
   // Function for submission validation
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
 
@@ -82,19 +91,39 @@ function App() {
       ...values,
       weather: values.weather.toLowerCase(),
       link: values.imageUrl,
+      _id: Date.now(), // temporary ID for testing
     };
 
-    try {
-      const savedItem = await addClothingItem(newGarment);
-      setClothingItems([savedItem, ...clothingItems]); // Add new items to the beginning
-      resetForm();
-      setIsSubmitted(false);
-      closeActiveModal();
-    } catch (error) {
-      console.error("Error adding clothing item:", error);
-      setIsSubmitted(false);
-    }
+    // Add the item directly to state
+    setClothingItems([newGarment, ...clothingItems]);
+    resetForm();
+    setIsSubmitted(false);
+    closeActiveModal();
   };
+
+  // ------------FOR BACKEND----------------
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitted(true);
+
+  //   const newGarment = {
+  //     ...values,
+  //     weather: values.weather.toLowerCase(),
+  //     link: values.imageUrl,
+  //   };
+
+  //   try {
+  //     const savedItem = await addClothingItem(newGarment);
+  //     setClothingItems([savedItem, ...clothingItems]); // Add new items to the beginning
+  //     resetForm();
+  //     setIsSubmitted(false);
+  //     closeActiveModal();
+  //   } catch (error) {
+  //     console.error("Error adding clothing item:", error);
+  //     setIsSubmitted(false);
+  //   }
+  // };
+  // ------------FOR BACKEND----------------
 
   useEffect(() => {
     if (!activeModal) return; // Only add listener when needed
@@ -120,22 +149,22 @@ function App() {
         setIsWeatherLoading(false);
       });
   }, []);
-
+  // --------------FOR BACKEND----------------
   // Fetching clothing items from the API
-  useEffect(() => {
-    setIsClothingLoading(true);
-    getClothingItems()
-      .then((items) => {
-        setClothingItems(items);
-      })
-      .catch((error) => {
-        console.error("Error fetching clothing items:", error);
-      })
-      .finally(() => {
-        setIsClothingLoading(false);
-      });
-  }, []);
-
+  // useEffect(() => {
+  //   setIsClothingLoading(true);
+  //   getClothingItems()
+  //     .then((items) => {
+  //       setClothingItems(items);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching clothing items:", error);
+  //     })
+  //     .finally(() => {
+  //       setIsClothingLoading(false);
+  //     });
+  // }, []);
+  // --------------FOR BACKEND----------------
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}>
@@ -165,7 +194,7 @@ function App() {
               element={
                 <Profile
                   clothingItems={clothingItems}
-                  handleCardClick={handleCardClick}
+                  onCardClick={handleCardClick}
                   weatherData={weatherData}
                 />
               }
@@ -183,7 +212,7 @@ function App() {
           values={values}
           errors={errors}
           handleChange={handleChange}
-          isFormValid={isFormValid()}
+          isFormValid={isFormValid}
         />
 
         <ItemModal
@@ -191,6 +220,7 @@ function App() {
           card={selectedCard}
           onClose={closeActiveModal}
           onOverlayClick={handleOverlayClick}
+          onDeleteCard={handleDeleteCard}
         />
 
         <Footer />

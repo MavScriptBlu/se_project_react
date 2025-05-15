@@ -20,7 +20,7 @@ export default function AddItemModal({
       isOpen={activeModal === "add-garment"}
       onClose={onClose}
       onOverlayClick={onOverlayClick}
-      isValid={isFormValid}
+      isValid={isFormValid()}
       onSubmit={onSubmit}
       isSubmitted={isSubmitted}>
       <label className="modal__label">

@@ -1,7 +1,13 @@
 /*ItemModal.jsx*/
 import "./itemmodal.css";
 
-function ItemModal({ activeModal, onClose, card, onOverlayClick }) {
+function ItemModal({
+  activeModal,
+  onClose,
+  card,
+  onOverlayClick,
+  onDeleteCard,
+}) {
   const handleContentClick = (e) => {
     e.stopPropagation();
   };
@@ -24,7 +30,9 @@ function ItemModal({ activeModal, onClose, card, onOverlayClick }) {
             <p className="modal__caption">{card.name}</p>
             <p className="modal__weather">Weather: {card.weather}</p>
           </section>{" "}
-          <button className="modal__delete">Delete Item</button>
+          <button className="modal__delete" onClick={() => onDeleteCard(card)}>
+            Delete Item
+          </button>{" "}
         </div>
       </div>
     </div>
