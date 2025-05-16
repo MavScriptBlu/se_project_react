@@ -22,17 +22,17 @@ function ItemModal({
         <button
           onClick={onClose}
           type="button"
-          className="modal__close modal__close_type_image"
+          className="modal__close_type_image"
         />
         <img src={card.link} alt={card.name} className="modal__image" />
         <div className="modal__footer">
           <section className="modal__footer-description">
             <p className="modal__caption">{card.name}</p>
             <p className="modal__weather">Weather: {card.weather}</p>
-          </section>{" "}
+          </section>
           <button className="modal__delete" onClick={() => onDeleteCard(card)}>
             Delete Item
-          </button>{" "}
+          </button>
         </div>
       </div>
     </div>

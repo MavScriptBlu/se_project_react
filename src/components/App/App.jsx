@@ -10,6 +10,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 import { coordinates, APIkey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
@@ -33,6 +34,8 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isWeatherLoading, setIsWeatherLoading] = useState(true);
   const [isClothingLoading, setIsClothingLoading] = useState(true);
+  const [cardToDelete, setCardToDelete] = useState(null);
+  const [nextId, setNextId] = useState(6);
 
   // Function to handle temperature unit toggle
   const handleToggleSwitchChange = () => {
@@ -56,17 +59,27 @@ function App() {
   };
 
   // Function to handle card deletion
-  const handleDeleteCard = (card) => {
+  const openConfirmationModal = (card) => {
+    setCardToDelete(card);
+    setActiveModal("delete-item");
+  };
+
+  // Function to handle card deletion
+  const handleDeleteCard = () => {
+    if (!cardToDelete) return;
+
     const updatedClothingItems = clothingItems.filter(
-      (item) => item._id !== card._id
+      (item) => item._id !== cardToDelete._id
     );
     setClothingItems(updatedClothingItems);
-    closeActiveModal(); // Close the modal after deletion
+    setCardToDelete(null);
+    closeActiveModal();
   };
 
   // Function to handle closing the active modal
   const closeActiveModal = () => {
     setActiveModal("");
+    setCardToDelete(null);
     resetForm(); // This will reset all form values
   };
 
@@ -86,14 +99,13 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
-
     const newGarment = {
-      ...values,
+      _id: nextId,
+      name: values.name,
       weather: values.weather.toLowerCase(),
-      link: values.imageUrl,
-      _id: Date.now(), // temporary ID for testing
+      link: values.imageUrl, // make sure this matches the property name used in defaultClothingItems
     };
-
+    setNextId(nextId + 1);
     // Add the item directly to state
     setClothingItems([newGarment, ...clothingItems]);
     resetForm();
@@ -196,6 +208,7 @@ function App() {
                   clothingItems={clothingItems}
                   onCardClick={handleCardClick}
                   weatherData={weatherData}
+                  onAddItem={handleAddClick}
                 />
               }
             />
@@ -220,7 +233,14 @@ function App() {
           card={selectedCard}
           onClose={closeActiveModal}
           onOverlayClick={handleOverlayClick}
-          onDeleteCard={handleDeleteCard}
+          onDeleteCard={openConfirmationModal}
+        />
+
+        <DeleteModal
+          activeModal={activeModal}
+          onClose={closeActiveModal}
+          onOverlayClick={handleOverlayClick}
+          handleConfirm={handleDeleteCard}
         />
 
         <Footer />

@@ -11,7 +11,7 @@ function Main({ weatherData, handleCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const filteredClothingItems = useMemo(() => {
-    const allItems = [...defaultClothingItems, ...clothingItems];
+    const allItems = [...clothingItems, ...defaultClothingItems];
     return allItems.filter((item) => {
       return item.weather === weatherData.type;
     });

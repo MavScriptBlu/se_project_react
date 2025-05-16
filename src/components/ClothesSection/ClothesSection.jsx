@@ -7,6 +7,7 @@ export default function ClothesSection({
   onCardClick,
   clothingItems,
   weatherData,
+  onAddItem,
 }) {
   // Add the same filtering logic as in Main.jsx
   const filteredClothingItems = useMemo(() => {
@@ -20,7 +21,10 @@ export default function ClothesSection({
     <div className="clothes-section">
       <div className="clothes-section__header">
         <p className="clothes-section__title">My Clothes</p>
-        <button className="clothes-section__add-button" type="button">
+        <button
+          className="clothes-section__add-button"
+          type="button"
+          onClick={onAddItem}>
           + Add New
         </button>
       </div>

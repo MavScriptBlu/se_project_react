@@ -28,6 +28,7 @@ was not needed */
   width: 20px;
   height: 20px;
   background-image: url(../../assets/closeButtonLight.svg);
+  background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
