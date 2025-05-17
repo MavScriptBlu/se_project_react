@@ -15,7 +15,7 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import { coordinates, APIkey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
-// import { getClothingItems, addClothingItem } from "../../utils/api";
+import { getItems, addItem, deleteItem } from "../../utils/api";
 
 function App() {
   // States for managing the application
@@ -35,7 +35,6 @@ function App() {
   const [isWeatherLoading, setIsWeatherLoading] = useState(true);
   const [isClothingLoading, setIsClothingLoading] = useState(true);
   const [cardToDelete, setCardToDelete] = useState(null);
-  const [nextId, setNextId] = useState(6);
 
   // Function to handle temperature unit toggle
   const handleToggleSwitchChange = () => {
@@ -65,15 +64,20 @@ function App() {
   };
 
   // Function to handle card deletion
-  const handleDeleteCard = () => {
+  const handleDeleteCard = async () => {
     if (!cardToDelete) return;
 
-    const updatedClothingItems = clothingItems.filter(
-      (item) => item._id !== cardToDelete._id
-    );
-    setClothingItems(updatedClothingItems);
-    setCardToDelete(null);
-    closeActiveModal();
+    try {
+      await deleteItem(cardToDelete._id);
+      const updatedClothingItems = clothingItems.filter(
+        (item) => item._id !== cardToDelete._id
+      );
+      setClothingItems(updatedClothingItems);
+      setCardToDelete(null);
+      closeActiveModal();
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
 
   // Function to handle closing the active modal
@@ -95,47 +99,28 @@ function App() {
     return isValid && values.name && values.imageUrl && values.weather;
   };
 
-  // Function for submission validation
-  const handleSubmit = (e) => {
+  // Function to add a new item to the API
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitted(true);
+
     const newGarment = {
-      _id: nextId,
       name: values.name,
       weather: values.weather.toLowerCase(),
-      link: values.imageUrl, // make sure this matches the property name used in defaultClothingItems
+      link: values.imageUrl,
     };
-    setNextId(nextId + 1);
-    // Add the item directly to state
-    setClothingItems([newGarment, ...clothingItems]);
-    resetForm();
-    setIsSubmitted(false);
-    closeActiveModal();
+
+    try {
+      const savedItem = await addItem(newGarment);
+      setClothingItems([savedItem, ...clothingItems]); // Add new items to the beginning
+      resetForm();
+      setIsSubmitted(false);
+      closeActiveModal();
+    } catch (error) {
+      console.error("Error adding clothing item:", error);
+      setIsSubmitted(false);
+    }
   };
-
-  // ------------FOR BACKEND----------------
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setIsSubmitted(true);
-
-  //   const newGarment = {
-  //     ...values,
-  //     weather: values.weather.toLowerCase(),
-  //     link: values.imageUrl,
-  //   };
-
-  //   try {
-  //     const savedItem = await addClothingItem(newGarment);
-  //     setClothingItems([savedItem, ...clothingItems]); // Add new items to the beginning
-  //     resetForm();
-  //     setIsSubmitted(false);
-  //     closeActiveModal();
-  //   } catch (error) {
-  //     console.error("Error adding clothing item:", error);
-  //     setIsSubmitted(false);
-  //   }
-  // };
-  // ------------FOR BACKEND----------------
 
   useEffect(() => {
     if (!activeModal) return; // Only add listener when needed
@@ -161,22 +146,22 @@ function App() {
         setIsWeatherLoading(false);
       });
   }, []);
-  // --------------FOR BACKEND----------------
-  // Fetching clothing items from the API
-  // useEffect(() => {
-  //   setIsClothingLoading(true);
-  //   getClothingItems()
-  //     .then((items) => {
-  //       setClothingItems(items);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching clothing items:", error);
-  //     })
-  //     .finally(() => {
-  //       setIsClothingLoading(false);
-  //     });
-  // }, []);
-  // --------------FOR BACKEND----------------
+
+  // Fetch clothing items from the API
+  useEffect(() => {
+    setIsClothingLoading(true);
+    getItems()
+      .then((items) => {
+        setClothingItems(items);
+      })
+      .catch((error) => {
+        console.error("Error fetching clothing items:", error);
+      })
+      .finally(() => {
+        setIsClothingLoading(false);
+      });
+  }, []);
+
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}>

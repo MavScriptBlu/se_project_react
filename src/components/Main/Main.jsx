@@ -11,7 +11,11 @@ function Main({ weatherData, handleCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const filteredClothingItems = useMemo(() => {
-    const allItems = [...clothingItems, ...defaultClothingItems];
+    const defaultItemsWithUniqueIds = defaultClothingItems.map((item) => ({
+      ...item,
+      _id: `default_${item._id}`, // This will make IDs like 'default_0', 'default_1', etc.
+    }));
+    const allItems = [...clothingItems, ...defaultItemsWithUniqueIds];
     return allItems.filter((item) => {
       return item.weather === weatherData.type;
     });
