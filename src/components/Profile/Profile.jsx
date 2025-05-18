@@ -5,19 +5,18 @@ import ClothesSection from "../ClothesSection/ClothesSection";
 export default function Profile({
   onCardClick,
   clothingItems,
-  weatherData,
   onAddItem,
+  currentUser,
 }) {
   return (
     <div className="profile">
-      <section className="profile__sidebar">
-        <SideBar />
+      <section className="profile_sidebar">
+        <SideBar currentUser={currentUser} />
       </section>
-      <section className="profile__clothing-items">
+      <section className="profile_clothing-items">
         <ClothesSection
           onCardClick={onCardClick}
           clothingItems={clothingItems}
-          weatherData={weatherData}
           onAddItem={onAddItem}
         />
       </section>

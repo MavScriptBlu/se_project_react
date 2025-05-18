@@ -1,10 +1,10 @@
 import "./modalwithform.css";
 
 function ModalWithForm({
+  isOpen,
   children,
   buttonText,
   title,
-  activeModal,
   onClose,
   onOverlayClick,
   isValid,
@@ -12,7 +12,7 @@ function ModalWithForm({
 }) {
   return (
     <div
-      className={`modal ${activeModal === "add-garment" ? "modal_opened" : ""}`}
+      className={`modal ${isOpen ? "modal_opened" : ""}`}
       onClick={onOverlayClick}>
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal__title">{title}</h2>

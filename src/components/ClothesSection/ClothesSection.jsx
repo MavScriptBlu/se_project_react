@@ -6,16 +6,13 @@ import { useMemo } from "react";
 export default function ClothesSection({
   onCardClick,
   clothingItems,
-  weatherData,
   onAddItem,
 }) {
-  // Add the same filtering logic as in Main.jsx
+  // Combine default clothing items with the user's clothing items
   const filteredClothingItems = useMemo(() => {
-    const allItems = [...defaultClothingItems, ...clothingItems];
-    return allItems.filter((item) => {
-      return item.weather === weatherData.type;
-    });
-  }, [weatherData.type, clothingItems]);
+    const allItems = [...clothingItems, ...defaultClothingItems];
+    return allItems;
+  }, [clothingItems]);
 
   return (
     <div className="clothes-section">

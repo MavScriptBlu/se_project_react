@@ -35,6 +35,9 @@ function App() {
   const [isWeatherLoading, setIsWeatherLoading] = useState(true);
   const [isClothingLoading, setIsClothingLoading] = useState(true);
   const [cardToDelete, setCardToDelete] = useState(null);
+  const [currentUser, setCurrentUser] = useState({
+    name: "Darien Johnas",
+  });
 
   // Function to handle temperature unit toggle
   const handleToggleSwitchChange = () => {
@@ -47,7 +50,7 @@ function App() {
     setSelectedCard(card);
   };
 
-  // Function to handle add modal opening/
+  // Function to handle add modal opening
   const handleAddClick = () => {
     setActiveModal("add-garment");
     setValues({
@@ -57,24 +60,32 @@ function App() {
     });
   };
 
-  // Function to handle card deletion
+  // Function to handle delete modal opening
   const openConfirmationModal = (card) => {
     setCardToDelete(card);
     setActiveModal("delete-item");
   };
 
-  // Function to handle card deletion
+  // Function to handle deletion of a card
   const handleDeleteCard = async () => {
     if (!cardToDelete) return;
 
-    try {
-      await deleteItem(cardToDelete._id);
-      const updatedClothingItems = clothingItems.filter(
-        (item) => item._id !== cardToDelete._id
-      );
-      setClothingItems(updatedClothingItems);
+    // Check if it's a default item
+    if (String(cardToDelete._id).startsWith("default_")) {
+      console.log("Cannot delete default items");
       setCardToDelete(null);
       closeActiveModal();
+      return;
+    }
+
+    try {
+      await deleteItem(cardToDelete.id); // Just use id directly
+      const updatedClothingItems = clothingItems.filter(
+        (item) => item.id !== cardToDelete.id // Simplified filter
+      );
+      setClothingItems(updatedClothingItems);
+      closeActiveModal();
+      setCardToDelete(null);
     } catch (error) {
       console.error("Error deleting item:", error);
     }
@@ -84,7 +95,6 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
     setCardToDelete(null);
-    resetForm(); // This will reset all form values
   };
 
   //Function to close modal on the overlay
@@ -105,6 +115,7 @@ function App() {
     setIsSubmitted(true);
 
     const newGarment = {
+      _id: String(Date.now()), // Convert timestamp to string for consistency
       name: values.name,
       weather: values.weather.toLowerCase(),
       link: values.imageUrl,
@@ -168,7 +179,7 @@ function App() {
       <div className="page">
         <div className="page__content">
           <Header
-            userName="Darien Johnas"
+            userName={currentUser.name}
             handleAddClick={handleAddClick}
             weatherData={weatherData}
           />
@@ -190,9 +201,9 @@ function App() {
               path="/profile"
               element={
                 <Profile
+                  currentUser={currentUser}
                   clothingItems={clothingItems}
                   onCardClick={handleCardClick}
-                  weatherData={weatherData}
                   onAddItem={handleAddClick}
                 />
               }
@@ -201,7 +212,6 @@ function App() {
         </div>
 
         <AddItemModal
-          activeModal={activeModal}
           isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
           onOverlayClick={handleOverlayClick}
@@ -214,7 +224,7 @@ function App() {
         />
 
         <ItemModal
-          activeModal={activeModal}
+          isOpen={activeModal === "preview"}
           card={selectedCard}
           onClose={closeActiveModal}
           onOverlayClick={handleOverlayClick}
@@ -222,7 +232,7 @@ function App() {
         />
 
         <DeleteModal
-          activeModal={activeModal}
+          isOpen={activeModal === "delete-item"}
           onClose={closeActiveModal}
           onOverlayClick={handleOverlayClick}
           handleConfirm={handleDeleteCard}

@@ -29,6 +29,9 @@ const addItem = (item) => {
 const deleteItem = (id) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
   }).then(checkResponse);
 };
 

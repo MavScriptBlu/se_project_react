@@ -1,8 +1,7 @@
-import "./additemmodal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 export default function AddItemModal({
-  activeModal,
+  isOpen,
   onClose,
   onOverlayClick,
   isSubmitted,
@@ -16,8 +15,7 @@ export default function AddItemModal({
     <ModalWithForm
       title="New Garment"
       buttonText="Add garment"
-      activeModal={activeModal}
-      isOpen={activeModal === "add-garment"}
+      isOpen={isOpen}
       onClose={onClose}
       onOverlayClick={onOverlayClick}
       isValid={isFormValid()}

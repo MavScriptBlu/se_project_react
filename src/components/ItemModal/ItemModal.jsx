@@ -1,20 +1,14 @@
 /*ItemModal.jsx*/
 import "./itemmodal.css";
 
-function ItemModal({
-  activeModal,
-  onClose,
-  card,
-  onOverlayClick,
-  onDeleteCard,
-}) {
+function ItemModal({ isOpen, onClose, card, onOverlayClick, onDeleteCard }) {
   const handleContentClick = (e) => {
     e.stopPropagation();
   };
 
   return (
     <div
-      className={`modal ${activeModal === "preview" && "modal_opened"}`}
+      className={`modal ${isOpen && "modal_opened"}`}
       onClick={onOverlayClick}>
       <div
         className="modal__content modal__content_type_image"
@@ -24,7 +18,11 @@ function ItemModal({
           type="button"
           className="modal__close_type_image"
         />
-        <img src={card.link} alt={card.name} className="modal__image" />
+        <img
+          src={card.link || card.imageUrl} //using link as majority of items have link. only db.json uses imageUrl
+          alt={card.name}
+          className="modal__image"
+        />
         <div className="modal__footer">
           <section className="modal__footer-description">
             <p className="modal__caption">{card.name}</p>

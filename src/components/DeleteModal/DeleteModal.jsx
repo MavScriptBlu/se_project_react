@@ -1,14 +1,15 @@
+//DeleteModal component
 import "./DeleteModal.css";
 
 export default function DeleteModal({
-  activeModal,
+  isOpen,
   onClose,
   onOverlayClick,
   handleConfirm,
 }) {
   return (
     <div
-      className={`modal ${activeModal === "delete-item" ? "modal_opened" : ""}`}
+      className={`modal ${isOpen ? "modal_opened" : ""}`}
       onClick={onOverlayClick}>
       <div className="delete-modal__content">
         <button
