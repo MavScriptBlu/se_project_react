@@ -59,3 +59,40 @@ This repository contains the React front-end for the **WTWR** project—a weathe
 ## 📜 **License**
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Setup & Deployment Instructions
+
+### 1. Backend Setup (Important!)
+
+Before running the frontend, you must start the backend server:
+
+1. Install JSON Server globally (if not already installed):
+   ```bash
+   npm install -g json-server
+   ```
+2. Start the backend server:
+   ```bash
+   json-server --watch db.json --port 3001
+   ```
+3. The backend will be running at `http://localhost:3001`
+   - Note: The delete functionality will only work when the backend server is running!
+
+### 2. Frontend Setup
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open `http://localhost:3000` in your browser
+
+### Important Notes
+
+- The delete functionality requires the backend server to be running
+- If items are not deleting, please ensure the backend server (json-server) is running on port 3001
+- Both servers (frontend and backend) need to be running simultaneously for full functionality
