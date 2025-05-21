@@ -1,10 +1,10 @@
 /*ItemModal.jsx*/
 import "./itemmodal.css";
-import useModalClose from "../../hooks/useModalClose";
+import useModalDismiss from "../../hooks/useModalDismiss";
 
 function ItemModal({ isOpen, onClose, card, onDeleteCard }) {
   // custom hook to handle modal close events
-  useModalClose(isOpen, onClose);
+  useModalDismiss(isOpen, onClose);
 
   return (
     <div className={`modal ${isOpen && "modal_opened"}`}>

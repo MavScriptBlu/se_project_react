@@ -1,5 +1,5 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import useModalClose from "../../hooks/useModalClose";
+import useModalDismiss from "../../hooks/useModalDismiss";
 
 export default function AddItemModal({
   isOpen,
@@ -12,7 +12,7 @@ export default function AddItemModal({
   isFormValid,
 }) {
   // custom hook to handle modal close events
-  useModalClose(isOpen, onClose);
+  useModalDismiss(isOpen, onClose);
 
   return (
     <ModalWithForm

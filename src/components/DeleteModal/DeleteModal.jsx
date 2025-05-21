@@ -1,10 +1,10 @@
 //DeleteModal component
 import "./DeleteModal.css";
-import useModalClose from "../../hooks/useModalClose";
+import useModalDismiss from "../../hooks/useModalDismiss";
 
 export default function DeleteModal({ isOpen, onClose, handleConfirm }) {
   // hook to handle modal close events
-  useModalClose(isOpen, onClose);
+  useModalDismiss(isOpen, onClose);
 
   return (
     <div className={`modal delete-modal ${isOpen ? "modal_opened" : ""}`}>

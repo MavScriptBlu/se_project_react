@@ -1,5 +1,5 @@
 import "./modalwithform.css";
-import useModalClose from "../../hooks/useModalClose"; // Adjust the path as needed
+import useModalDismiss from "../../hooks/useModalDismiss"; // Adjust the path as needed
 
 function ModalWithForm({
   isOpen,
@@ -11,7 +11,7 @@ function ModalWithForm({
   onSubmit,
 }) {
   // custom hook to handle modal close events
-  useModalClose(isOpen, onClose);
+  useModalDismiss(isOpen, onClose);
 
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
