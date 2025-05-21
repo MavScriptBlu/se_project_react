@@ -1,6 +1,5 @@
 import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard.jsx";
-import { defaultClothingItems } from "../../utils/constants";
 import { useMemo } from "react";
 
 export default function ClothesSection({
@@ -10,7 +9,7 @@ export default function ClothesSection({
 }) {
   // Combine default clothing items with the user's clothing items
   const filteredClothingItems = useMemo(() => {
-    const allItems = [...clothingItems, ...defaultClothingItems];
+    const allItems = [...clothingItems];
     return allItems;
   }, [clothingItems]);
 

@@ -69,15 +69,6 @@ function App() {
   // Function to handle deletion of a card
   const handleDeleteCard = async () => {
     if (!cardToDelete) return;
-
-    // Check if it's a default item
-    if (String(cardToDelete._id).startsWith("default_")) {
-      console.log("Cannot delete default items");
-      setCardToDelete(null);
-      closeActiveModal();
-      return;
-    }
-
     try {
       await deleteItem(cardToDelete.id); // Just use id directly
       const updatedClothingItems = clothingItems.filter(
@@ -110,15 +101,15 @@ function App() {
   };
 
   // Function to add a new item to the API
-  const handleSubmit = async (e) => {
+  const handleAddItemSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitted(true);
 
     const newGarment = {
-      _id: String(Date.now()), // Convert timestamp to string for consistency
+      _id: Math.max(...clothingItems.map((item) => item._id)) + 1,
       name: values.name,
       weather: values.weather.toLowerCase(),
-      link: values.imageUrl,
+      imageUrl: values.imageUrl,
     };
 
     try {
@@ -216,7 +207,7 @@ function App() {
           onClose={closeActiveModal}
           onOverlayClick={handleOverlayClick}
           isSubmitted={isSubmitted}
-          onSubmit={handleSubmit}
+          onSubmit={handleAddItemSubmit}
           values={values}
           errors={errors}
           handleChange={handleChange}
