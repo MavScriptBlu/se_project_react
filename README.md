@@ -59,12 +59,16 @@ This repository contains the React front-end for the **WTWR** project—a weathe
 Before running the frontend, you must start the backend server:
 
 1. Install JSON Server globally (if not already installed):
+
    ```bash
-   npm install -g json-server
+   npm install -g json-server@0.17.4
    ```
+
+   Note: This project requires JSON Server version 0.17.0 to ensure compatibility with the reviewer's environment.
+
 2. Start the backend server:
    ```bash
-   json-server --watch db.json --port 3001
+   json-server --watch db.json --id _id --port 3001
    ```
 3. The backend will be running at `http://localhost:3001`
    - Note: The delete functionality will only work when the backend server is running!
