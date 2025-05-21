@@ -1,7 +1,7 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import useModalDismiss from "../../hooks/useModalDismiss";
 
-export default function AddItemModal({
+function AddItemModal({
   isOpen,
   onClose,
   isSubmitted,
@@ -98,3 +98,5 @@ export default function AddItemModal({
     </ModalWithForm>
   );
 }
+
+export default AddItemModal;

@@ -2,11 +2,7 @@ import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard.jsx";
 import { useMemo } from "react";
 
-export default function ClothesSection({
-  onCardClick,
-  clothingItems,
-  onAddItem,
-}) {
+function ClothesSection({ onCardClick, clothingItems, onAddItem }) {
   const filteredClothingItems = useMemo(() => {
     const allItems = [...clothingItems];
     return allItems;
@@ -33,3 +29,5 @@ export default function ClothesSection({
     </div>
   );
 }
+
+export default ClothesSection;

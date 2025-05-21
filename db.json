@@ -125,13 +125,6 @@
       "name": "test",
       "weather": "cold",
       "imageUrl": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=300&q=80"
-    },
-    {
-      "id": "c330",
-      "_id": 18,
-      "name": "test2",
-      "weather": "cold",
-      "imageUrl": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=300&q=80"
     }
   ]
 }

@@ -2,7 +2,7 @@
 import "./DeleteModal.css";
 import useModalDismiss from "../../hooks/useModalDismiss";
 
-export default function DeleteModal({ isOpen, onClose, handleConfirm }) {
+function DeleteModal({ isOpen, onClose, handleConfirm }) {
   // hook to handle modal close events
   useModalDismiss(isOpen, onClose);
 
@@ -32,3 +32,5 @@ export default function DeleteModal({ isOpen, onClose, handleConfirm }) {
     </div>
   );
 }
+
+export default DeleteModal;

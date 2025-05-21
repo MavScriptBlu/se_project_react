@@ -9,20 +9,24 @@ const checkResponse = (res) => {
   return Promise.reject(`Error: ${res.status}`);
 };
 
+const request = (url, options) => {
+  return fetch(url, options).then(checkResponse);
+};
+
 // GET items
 const getItems = () => {
-  return fetch(`${baseUrl}/items`).then(checkResponse);
+  return request(`${baseUrl}/items`);
 };
 
 // POST items
 const addItem = (item) => {
-  return fetch(`${baseUrl}/items`, {
+  return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(item),
-  }).then(checkResponse);
+  });
 };
 
 /* 
@@ -31,12 +35,12 @@ const addItem = (item) => {
 */
 // DELETE items
 const deleteItem = (id) => {
-  return fetch(`${baseUrl}/items/${id}`, {
+  return request(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkResponse);
+  });
 };
 
 export { getItems, addItem, deleteItem, checkResponse };
