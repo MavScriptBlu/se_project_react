@@ -34,8 +34,8 @@ const addItem = (item) => {
   please follow the deployment instructions in the README file.
 */
 // DELETE items
-const deleteItem = (id) => {
-  return request(`${baseUrl}/items/${id}`, {
+const deleteItem = (_id) => {
+  return request(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

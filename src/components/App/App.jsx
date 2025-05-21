@@ -74,9 +74,9 @@ function App() {
   const handleDeleteCard = async () => {
     if (!cardToDelete) return;
     try {
-      await deleteItem(cardToDelete.id); // Just use id directly
+      await deleteItem(cardToDelete._id); // Just use id directly
       const updatedClothingItems = clothingItems.filter(
-        (item) => item.id !== cardToDelete.id // Simplified filter
+        (item) => item._id !== cardToDelete._id // Simplified filter
       );
       setClothingItems(updatedClothingItems);
       closeActiveModal();

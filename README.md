@@ -14,10 +14,6 @@ This repository contains the React front-end for the **WTWR** project—a weathe
 
 - Efficient handling of user interactions and clothing recommendations ensures smooth functionality.
 
-### **Responsive Design**
-
-- Styled with CSS to adapt beautifully across mobile, tablet, and desktop devices.
-
 ---
 
 ## ⭐ **Key Features**
@@ -56,12 +52,6 @@ This repository contains the React front-end for the **WTWR** project—a weathe
 
 ---
 
-## 📜 **License**
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
 ## Setup & Deployment Instructions
 
 ### 1. Backend Setup (Important!)
@@ -96,3 +86,13 @@ Before running the frontend, you must start the backend server:
 - The delete functionality requires the backend server to be running
 - If items are not deleting, please ensure the backend server (json-server) is running on port 3001
 - Both servers (frontend and backend) need to be running simultaneously for full functionality
+
+---
+
+## 📜 **License**
+
+📌 Maintained by: [iiBamBlue](https://github.com/iiBamBlue)
+💡 Bootcamp: [TripleTen](https://tripleten.com/)
+🔧 License: [MIT License](LICENSE)
+
+---

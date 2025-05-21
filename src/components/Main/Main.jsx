@@ -8,14 +8,8 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 
 function Main({ weatherData, handleCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-
   const filteredClothingItems = useMemo(() => {
-    const databaseItemsWithStringIds = clothingItems.map((item) => ({
-      ...item,
-      _id: String(item._id), // Convert number IDs to strings
-    }));
-
-    return databaseItemsWithStringIds.filter((item) => {
+    return clothingItems.filter((item) => {
       return item.weather === weatherData.type;
     });
   }, [weatherData.type, clothingItems]);
