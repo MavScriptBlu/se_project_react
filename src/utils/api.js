@@ -25,6 +25,10 @@ const addItem = (item) => {
   }).then(checkResponse);
 };
 
+/* 
+  IMPORTANT: For proper card deletion functionality, 
+  please follow the deployment instructions in the README file.
+*/
 // DELETE items
 const deleteItem = (id) => {
   return fetch(`${baseUrl}/items/${id}`, {

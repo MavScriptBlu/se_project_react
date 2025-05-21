@@ -7,7 +7,6 @@ export default function ClothesSection({
   clothingItems,
   onAddItem,
 }) {
-  // Combine default clothing items with the user's clothing items
   const filteredClothingItems = useMemo(() => {
     const allItems = [...clothingItems];
     return allItems;

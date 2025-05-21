@@ -1,18 +1,16 @@
 /*ItemModal.jsx*/
 import "./itemmodal.css";
+import useModalClose from "../../hooks/useModalClose";
 
-function ItemModal({ isOpen, onClose, card, onOverlayClick, onDeleteCard }) {
-  const handleContentClick = (e) => {
-    e.stopPropagation();
-  };
+function ItemModal({ isOpen, onClose, card, onDeleteCard }) {
+  // custom hook to handle modal close events
+  useModalClose(isOpen, onClose);
 
   return (
-    <div
-      className={`modal ${isOpen && "modal_opened"}`}
-      onClick={onOverlayClick}>
+    <div className={`modal ${isOpen && "modal_opened"}`}>
       <div
         className="modal__content modal__content_type_image"
-        onClick={handleContentClick}>
+        onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
           type="button"

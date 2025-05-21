@@ -1,4 +1,5 @@
 import "./modalwithform.css";
+import useModalClose from "../../hooks/useModalClose"; // Adjust the path as needed
 
 function ModalWithForm({
   isOpen,
@@ -6,14 +7,14 @@ function ModalWithForm({
   buttonText,
   title,
   onClose,
-  onOverlayClick,
   isValid,
   onSubmit,
 }) {
+  // custom hook to handle modal close events
+  useModalClose(isOpen, onClose);
+
   return (
-    <div
-      className={`modal ${isOpen ? "modal_opened" : ""}`}
-      onClick={onOverlayClick}>
+    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal__title">{title}</h2>
         <button

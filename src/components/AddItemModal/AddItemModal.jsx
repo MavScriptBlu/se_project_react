@@ -1,9 +1,9 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import useModalClose from "../../hooks/useModalClose";
 
 export default function AddItemModal({
   isOpen,
   onClose,
-  onOverlayClick,
   isSubmitted,
   onSubmit,
   values,
@@ -11,13 +11,15 @@ export default function AddItemModal({
   handleChange,
   isFormValid,
 }) {
+  // custom hook to handle modal close events
+  useModalClose(isOpen, onClose);
+
   return (
     <ModalWithForm
       title="New Garment"
       buttonText="Add garment"
       isOpen={isOpen}
       onClose={onClose}
-      onOverlayClick={onOverlayClick}
       isValid={isFormValid()}
       onSubmit={onSubmit}
       isSubmitted={isSubmitted}>

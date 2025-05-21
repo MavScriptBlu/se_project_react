@@ -66,6 +66,10 @@ function App() {
     setActiveModal("delete-item");
   };
 
+  /* 
+  IMPORTANT: For proper card deletion functionality, 
+  please follow the deployment instructions in the README file.
+*/
   // Function to handle deletion of a card
   const handleDeleteCard = async () => {
     if (!cardToDelete) return;
@@ -86,13 +90,6 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
     setCardToDelete(null);
-  };
-
-  //Function to close modal on the overlay
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      closeActiveModal();
-    }
   };
 
   // Function for form input value validation
@@ -116,10 +113,10 @@ function App() {
       const savedItem = await addItem(newGarment);
       setClothingItems([savedItem, ...clothingItems]); // Add new items to the beginning
       resetForm();
-      setIsSubmitted(false);
       closeActiveModal();
     } catch (error) {
       console.error("Error adding clothing item:", error);
+    } finally {
       setIsSubmitted(false);
     }
   };
@@ -205,7 +202,6 @@ function App() {
         <AddItemModal
           isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
-          onOverlayClick={handleOverlayClick}
           isSubmitted={isSubmitted}
           onSubmit={handleAddItemSubmit}
           values={values}
@@ -218,14 +214,12 @@ function App() {
           isOpen={activeModal === "preview"}
           card={selectedCard}
           onClose={closeActiveModal}
-          onOverlayClick={handleOverlayClick}
           onDeleteCard={openConfirmationModal}
         />
 
         <DeleteModal
           isOpen={activeModal === "delete-item"}
           onClose={closeActiveModal}
-          onOverlayClick={handleOverlayClick}
           handleConfirm={handleDeleteCard}
         />
 
