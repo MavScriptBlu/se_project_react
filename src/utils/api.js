@@ -1,5 +1,7 @@
-// Base URL for our mock API
-const baseUrl = "http://localhost:3001";
+/** @format */
+
+// Base URL for our API, using environment variable for deployment flexibility
+const baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
 
 // Check if the response is ok
 const checkResponse = (res) => {
