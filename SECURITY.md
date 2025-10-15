@@ -4,7 +4,7 @@
 
 If you discover a security issue in this repository, please report it responsibly.
 
-- **Email:**   
+- **Email:** security@example.com  
 - **Expected Response Time:** Within 2–3 business days  
 - **Preferred Disclosure:** Private first, public later if unresolved
 
