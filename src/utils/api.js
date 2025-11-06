@@ -22,6 +22,22 @@ const getItems = () => {
 
 // POST items
 const addItem = (item) => {
+  // Check if we're uploading a file
+  if (item.imageFile && item.imageFile instanceof File) {
+    // Use FormData for file uploads
+    const formData = new FormData();
+    formData.append("name", item.name);
+    formData.append("weather", item.weather);
+    formData.append("image", item.imageFile); // 'image' matches multer config
+
+    // Don't set Content-Type header - browser will set it automatically with boundary
+    return request(`${baseUrl}/items`, {
+      method: "POST",
+      body: formData,
+    });
+  }
+
+  // Use JSON for URL-based images (original behavior)
   return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
